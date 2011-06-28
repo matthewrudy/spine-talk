@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-  <title>Coffee</title>
+  <title>Spine</title>
   <meta name="author" content="Matthew Rudy Jacobs" />
   <meta name="email" content="MatthewRudyJacobs@gmail.com" />
   <meta name="venue" content="Codeaholics.hk June 2011" />
@@ -26,6 +26,9 @@
   .slide pre {
     font-size : 0.7em;
   }
+  .slide pre.massive {
+    font-size : 1.0em
+  }
   .slide pre.big {
     font-size : 1.0em;
   }
@@ -36,7 +39,7 @@
     font-size : 0.3em;
   }
   h1 {
-    font-size : 2.5em;
+    font-size : 1.5em;
   }
   h1.extra {
     font-size : 3.5em;
@@ -70,6 +73,12 @@
 
   <div class="slide">
     <h1>What the hell is he talking about?</h1>
+    <h2>Backbone?</h2>
+  </div>
+  
+  <div class="slide">
+    <h1>Spine!</h1>
+    <h2>because I like Alex</h2>
   </div>
 
   <div class="slide">
@@ -85,6 +94,132 @@
   </div>
 
   <div class="slide">
+    <h2>Spine.Model</h2>
+    <pre class="big">var Message = 
+  Spine.Model.setup(
+  
+    // the name
+    "Message",
+    
+    // the fields
+    ["body"
+    ,"name"
+    ,"channel_id"
+    ]);</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Add some Class Methods</h1>
+    <pre class="big">
+Message.extend({
+  poos: function(){
+    return this.select(function(m){
+      return m.body == "poo";
+    });
+  }
+});
+
+Message.poos()
+// [Message, ...]</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Default some attributes</h2>
+    <pre class="big">Message.include({
+  body: "blah blah blah",
+  name: "Robot"
+  });</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Add some Instance Methods</h2>
+    <pre class="big">Message.include({
+  channel: function(){
+    return Channel.find(
+      this.channel_id
+    );
+  }
+});
+
+message.channel() // Channel:44</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Validate it</h1>
+    <pre class="big">
+Message.include({
+  validate: function(){
+    if(!this.channel_id){
+      // return a message
+      // to stop save()
+      return "channel_id required";
+    }
+  }
+});
+</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Instantiate it!</h1>
+    <pre class="big">
+var message = Message.init({
+  name: "Peter",
+  body: "oh gosh"
+});
+
+message.name // "Peter"
+message.channel() // null
+message.save() // Validation failed:
+</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Persist in Memory!</h1>
+    <pre class="big">
+message.channel_id = 12345;
+message.save();
+
+// ace
+// for now
+// refresh your browser
+// its gone
+  </div>
+  
+  <div class="slide">
+    <h1>Persist locally!</h1>
+    <pre class="massive">
+// html 5 datastore
+
+if(Modernizr.localstorage){
+  Message.extend(
+    Spine.Model.Local
+  );
+}</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Persist via Ajax!</h1>
+    <pre class="massive">
+Message.extend(Spine.Model.Ajax);
+
+// GET /messages
+Message.fetch();
+
+// POST /messages
+var message = Message.create();
+
+// PUT /messages/:id
+message.save();
+</pre>
+  </div>
+  
+  <div class="slide">
+    <h1>Override the URL!</h1>
+    <pre class="massive">
+Message.extend({
+  url: "/chat/messages"
+});
+</pre>
   </div>
 
 </body>
