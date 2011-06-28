@@ -179,10 +179,10 @@ message.save() // Validation failed:
 message.channel_id = 12345;
 message.save();
 
-// ace
-// for now
-// refresh your browser
-// its gone
+message.id; // "49557B45-7048-480C
+            //  -BED8-23358E5239D4"
+
+Message.all() == [message];
   </div>
   
   <div class="slide">
@@ -194,7 +194,10 @@ if(Modernizr.localstorage){
   Message.extend(
     Spine.Model.Local
   );
-}</pre>
+}
+
+// loads from local storage
+Message.fetch();</pre>
   </div>
   
   <div class="slide">
@@ -220,6 +223,13 @@ Message.extend({
   url: "/chat/messages"
 });
 </pre>
+    <h1>Catch errors</h1>
+    <pre class="big">
+Message.bind("ajaxError",
+  function(xhr, settings, error){
+    showError(error);
+  }
+);</pre>
   </div>
 
 </body>
