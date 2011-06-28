@@ -24,7 +24,7 @@
 
   <style type="text/css">
   .slide pre {
-    font-size : 0.7em;
+    font-size : 1.0em;
   }
   .slide pre.massive {
     font-size : 1.0em
@@ -67,24 +67,64 @@
     <h1>Javascript Web Applications</h1>
     <p>Codeaholics.hk</p>
     <p>Wednesday 29th June 2011</p>
+    <p>@<a href="http://twitter.com/matthewrudy">MatthewRudy</a></p>
   </div>
 
   <div class="slide">
     <h1>The Book</h1>
+    <ul>
+      <li>"Javascript Web Applications" by Alex Maccaw (@<a href="http://twitter.com/maccman">Maccman</a>)</li>
+      <li>"A Walkthrough of building a Javascript MVC framework from scratch, with loads of interesting digressions along the way"</li>
+    </ul>
+  </div>
+  
+  <div class="slide">
+    <h1>It covers</h1>
+    <ul>
+      <li>Events</li>
+      <li>Prototypal Inheritance</li>
+      <li>localStorage</li>
+      <li>HTML5 File APIs</li>
+      <li>...</li>
+    </ul>
   </div>
 
-  <div class="slide">
-    <h1>What the hell is he talking about?</h1>
-    <h2>Backbone?</h2>
+  <div class="slide section">
+    <h1>Backbone or Spine?<h1>
   </div>
   
   <div class="slide">
     <h1>Spine!</h1>
-    <h2>because I like Alex</h2>
+    <ul>
+      <li>It's the underdog</li>
+      <li>More Rails-y</li>
+      <li>model.name, rather than model.get(:name)</li>
+      <li>Because Sammi likes Alex</li>
+    </ul>
   </div>
 
-  <div class="slide">
+  <div class="slide section">
     <h1>MVC on the client</h1>
+  </div>
+  
+  <div class="slide">
+    <h1>Client-side Responsive</h1>
+    <ul>
+      <li>Validation in the browser</li>
+      <li>Asynchronous Saves</li>
+      <li>Instant Responses</li>
+      <li>Take it Offline</li>
+    </ul>
+  </div>
+  
+  <div class="slide">
+    <h1>Server-side Simplified</h1>
+    <ul>
+      <li>CRUD</li>
+      <li>Access and Authorisation</li>
+      <li>Definitive Data Store</li>
+      <li>Push updates clients</li>
+    </ul>
   </div>
   
   <div class="slide section">
@@ -280,7 +320,6 @@ Message.bind("ajaxError",
     <pre>
 &lt;script id="messageTemplate"
   type="text/x-jquery-tmpl"&gt;
-  
   &lt;li class="item"&gt;
     &lt;span class="name"&gt;
       ${name || "(unknown)"}
@@ -289,7 +328,6 @@ Message.bind("ajaxError",
       ${body}
     &lt;/span&gt;
   &lt;/li&gt;
-
 &lt;/script&gt;</pre>
    </div>
    
@@ -305,13 +343,13 @@ list.append(tmpl.tmpl({
   body: "Hello guys"
 }));
 
-// refresh
+// refresh them all
 list.html(tmpl.tmpl(Message.all());
 </pre>
     </div>
     
     <div class="slide">
-      <h1>But actually its the controller's job to coordinate View rendering...</h1>
+      <h1>But actually its the Controller's job to coordinate View rendering...</h1>
     </div>
     
     <div class="slide section">
