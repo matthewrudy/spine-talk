@@ -26,31 +26,21 @@
   .slide pre {
     font-size : 1.0em;
   }
-  .slide pre.massive {
-    font-size : 1.0em
-  }
-  .slide pre.big {
-    font-size : 1.0em;
-  }
   .slide pre.smaller {
-    font-size : 0.75em;
+    font-size : 0.7em;
   }
-  .slide pre.smallest {
-    font-size : 0.3em;
+  .slide img {
+    width : 100%;
+    margin: auto;
   }
   h1 {
     font-size : 1.5em;
   }
-  
-  .section h1,
-  h1.extra {
+  .section h1 {
     font-size : 2.5em;
   }
   li {
     padding : 0.5em 0;
-  }
-  #background {
-    color : #333;
   }
   </style>
 
@@ -63,6 +53,7 @@
 </head>
 
 <body>
+<div id="slides">
   <div class="slide section">
     <h1>Javascript Web Applications</h1>
     <p>Codeaholics.hk</p>
@@ -85,7 +76,7 @@
       <li>Prototypal Inheritance</li>
       <li>localStorage</li>
       <li>HTML5 File APIs</li>
-      <li>...</li>
+      <li>Backbone &amp; Spine</li>
     </ul>
   </div>
 
@@ -332,7 +323,7 @@ Message.bind("ajaxError",
    </div>
    
    <div class="slide">
-     <h1>Use them</h1>
+     <h1>Combine them!</h1>
      <pre>
 var tmpl = $("#messageTemplate");
 var list = $("#messages ul");
@@ -369,5 +360,124 @@ list.html(tmpl.tmpl(Message.all());
       <h2>Solution:</h2>
       <h1>Spine.Controller</h1>
     </div>
+    
+    <div class="slide">
+      <h1>The List of Messages is a Controller</h1>
+      <img src="images/messages.png" />
+    </div>
+    
+    <div class="slide">
+      <h1>So is the List of Channels</h1>
+      <img src="images/channels.png" />
+    </div>
+    
+    <div class="slide">
+      <h1>And so is the Whole App!</h1>
+      <img src="images/the-app.png" />
+    </div>
+    
+    <div class="slide">
+      <h1>I'll shut up and just talk about Messages</h1>
+    </div>
+    
+    <div class="slide">
+      <h1>Actions</h1>
+      <ul>
+        <li>Show the List of Messages</li>
+        <li>Click on a Message to @reply</li>
+        <li>Input a Message and Click "send" to Create a Message</li>
+      </ul>
+    </div>
+    
+    <div class="slide">
+      <h1>Define it!</h1>
+      <pre class="smaller">
+var Messages = Spine.Controller.create({
+  elements: {
+    ".items": "items",
+  },
+
+  proxied: ["render"],
+  
+  render: function(){
+    this.items.html(
+      $("#messageTemplate").tmpl(
+        Message.all()
+      )
+    );
+  }
+})  
+      </pre>
+    </div>
+    
+    <div class="slide">
+      <h1>Instantiate it!</h1>
+      <pre>
+// use an existing DOM element
+var messages = Messages.init(
+  $("#messages")
+);
+
+// render it
+messages.render();
+      </pre>
+    </div>
+    
+    <div class="slide">
+      <h1>Add the Create!</h1>
+      <pre class="smaller">
+Messages = Spine.Controller.create({
+  elements: {".new textarea": "input"},
+  events:   {"click .new button": "create"},
+  proxied:  ["create"],
+
+  create: function(){
+    Message.create({
+      name:       "Peter",
+      channel_id: 12345, 
+      body: this.input.val();
+    });
+    
+    this.input.val("");
+    this.render();
+  }
+});
+      </pre>
+    </div>
+    
+    <div class="slide">
+      <h1>De-couple it!</h1>
+      <pre class="smaller">
+Messages = Spine.Controller.create({
+  init: function(){
+    Message.bind("create", addOne);
+    Message.bind("refresh", render);
+  },
+  create: function(){
+    Message.create({
+      name:       "Peter",
+      channel_id: 12345, 
+      body: this.input.val();
+    });
+    this.input.val("");
+  },
+  addOne: function(item){
+    this.items.append(template(item));
+  }
+});
+      </pre>
+    </div>
+    
+    <div class="slide">
+      <h1>And So On...</h1>
+      <h2><a href="https://github.com/maccman/spine.todos">Spine.todos</a> is a simple example</h2>
+      <h2><a href="https://github.com/maccman/holla">Holla</a> is more full-on</h2>
+    </div>  
+    
+    <div class="slide">
+      <h1>Thanks</h1>
+      <h1>Stalk me @<a href="http://twitter.com/matthewrudy">MatthewRudy</a></h1>
+    </div>
+  </div>
 </body>
 </html>
