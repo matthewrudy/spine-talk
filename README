@@ -1,0 +1,11 @@
+Javascript Web Applications
+===========================
+
+A talk given at http://Codeaholics.HK
+on Wednesday 29th June 2011
+by Matthew Rudy Jacobs (@MatthewRudy)
+
+Lessons learned from "Javascript Web Applications" (http://oreilly.com/catalog/0636920018421)
+Focusing on client-side MVC
+With specific examples using Spine (https://github.com/maccman/spine)
+And the chat app Holla (https://github.com/maccman/holla)
